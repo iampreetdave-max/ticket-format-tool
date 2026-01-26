@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket Generator Pro</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-main">
+        <div class="logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M3 10h18" stroke="currentColor" stroke-width="2"/>
+            <path d="M9 4v6" stroke="currentColor" stroke-width="2"/>
+            <circle cx="7" cy="15" r="1.5" fill="currentColor"/>
+            <path d="M11 15h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <h1>Ticket Generator</h1>
+        </div>
+        <div class="header-actions">
+          <button type="button" class="btn-icon" id="historyBtn" title="History">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12,6 12,12 16,14"/>
+            </svg>
+          </button>
+          <button type="button" class="btn-icon" id="settingsBtn" title="Settings">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tab Navigation -->
+    <nav class="tabs">
+      <button type="button" class="tab active" data-tab="main">Convert</button>
+      <button type="button" class="tab" data-tab="history">History</button>
+      <button type="button" class="tab" data-tab="settings">Settings</button>
+    </nav>
+
+    <!-- Main Tab -->
+    <main class="tab-content active" id="mainTab">
+      <!-- API Key Section -->
+      <section class="section api-section collapsed" id="apiSection">
+        <button type="button" class="section-header" id="apiToggle">
+          <span class="section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            API Configuration
+          </span>
+          <span class="key-badge" id="keyBadge">Not Set</span>
+          <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div class="section-body">
+          <div class="input-group">
+            <label for="aiProvider">AI Provider</label>
+            <select id="aiProvider">
+              <option value="gemini">Google Gemini (Free)</option>
+              <option value="groq">Groq (Free - Recommended)</option>
+              <option value="mistral">Mistral AI (Free)</option>
+              <option value="openrouter">OpenRouter (Free models)</option>
+            </select>
+          </div>
+          <div class="provider-info" id="providerInfo">
+            <span class="info-text">Get free API key:</span>
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" id="providerLink">Google AI Studio</a>
+          </div>
+          <div class="api-input-row">
+            <input type="password" id="apiKey" placeholder="Enter API key" autocomplete="off">
+            <button type="button" id="toggleKeyVis" class="btn-icon-sm" title="Show/Hide">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+            <button type="button" id="saveKey" class="btn-sm btn-primary">Save</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Task Input Section -->
+      <section class="section">
+        <div class="input-row">
+          <div class="select-group">
+            <label for="ticketType">Type</label>
+            <select id="ticketType">
+              <option value="Feature">Feature</option>
+              <option value="Bug">Bug</option>
+              <option value="Spike/Research">Spike/Research</option>
+              <option value="ML Task">ML Task</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <label for="roleSelect">Role</label>
+            <select id="roleSelect">
+              <option value="Business Analyst">Business Analyst</option>
+              <option value="Product Owner">Product Owner</option>
+              <option value="Developer">Developer</option>
+              <option value="ML Engineer">ML Engineer</option>
+              <option value="QA Engineer">QA Engineer</option>
+              <option value="DevOps Engineer">DevOps Engineer</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="taskInput">Task Description</label>
+          <textarea id="taskInput" placeholder="Describe the task, feature, or bug..." rows="5"></textarea>
+          <div class="input-actions">
+            <button type="button" id="useSelectionBtn" class="btn-xs" title="Use selected text from page">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+              </svg>
+              Selection
+            </button>
+            <button type="button" id="useClipboardBtn" class="btn-xs" title="Paste from clipboard">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              Clipboard
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Options Section -->
+      <section class="section options-section">
+        <div class="toggle-row">
+          <label class="toggle">
+            <input type="checkbox" id="quickMode">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Quick Mode</span>
+            <span class="toggle-hint">Auto-copy output</span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <label class="toggle">
+            <input type="checkbox" id="minimalAssumptions">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Minimal Assumptions</span>
+            <span class="toggle-hint">Don't invent details</span>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <label class="toggle">
+            <input type="checkbox" id="detailedOutput">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Detailed Output</span>
+            <span class="toggle-hint">More thorough DoD</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button type="button" id="convertBtn" class="btn btn-primary btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+          <span class="btn-text">Convert to Ticket</span>
+          <span class="btn-loader" hidden></span>
+        </button>
+        <button type="button" id="clearBtn" class="btn btn-secondary">Clear</button>
+      </div>
+
+      <!-- Status Bar -->
+      <div class="status-bar" id="statusBar">
+        <span class="status-dot"></span>
+        <span class="status-text" id="statusText">Ready</span>
+      </div>
+
+      <!-- Output Section -->
+      <section class="section output-section">
+        <div class="output-header">
+          <label>Generated Ticket</label>
+          <div class="output-actions">
+            <button type="button" id="copyBtn" class="btn-xs" title="Copy to clipboard">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              Copy
+            </button>
+            <button type="button" id="copyMarkdownBtn" class="btn-xs" title="Copy as Markdown">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+              MD
+            </button>
+          </div>
+        </div>
+        <textarea id="outputText" readonly placeholder="Your formatted ticket will appear here..."></textarea>
+      </section>
+    </main>
+
+    <!-- History Tab -->
+    <main class="tab-content" id="historyTab">
+      <div class="history-header">
+        <input type="text" id="historySearch" placeholder="Search history...">
+        <button type="button" id="clearHistoryBtn" class="btn-xs btn-danger">Clear All</button>
+      </div>
+      <div class="history-list" id="historyList">
+        <div class="empty-state">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12,6 12,12 16,14"/>
+          </svg>
+          <p>No history yet</p>
+          <span>Converted tickets will appear here</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Settings Tab -->
+    <main class="tab-content" id="settingsTab">
+      <section class="section">
+        <h3 class="section-title-plain">Project Defaults</h3>
+        <div class="input-group">
+          <label for="projectName">Project Name</label>
+          <input type="text" id="projectName" placeholder="My Project">
+        </div>
+        <div class="input-group">
+          <label for="repoUrl">Repository URL (optional)</label>
+          <input type="text" id="repoUrl" placeholder="https://github.com/...">
+        </div>
+        <div class="input-row">
+          <div class="select-group">
+            <label for="defaultTicketType">Default Ticket Type</label>
+            <select id="defaultTicketType">
+              <option value="Feature">Feature</option>
+              <option value="Bug">Bug</option>
+              <option value="Spike/Research">Spike/Research</option>
+              <option value="ML Task">ML Task</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <label for="defaultRole">Default Role</label>
+            <select id="defaultRole">
+              <option value="Business Analyst">Business Analyst</option>
+              <option value="Product Owner">Product Owner</option>
+              <option value="Developer">Developer</option>
+              <option value="ML Engineer">ML Engineer</option>
+              <option value="QA Engineer">QA Engineer</option>
+              <option value="DevOps Engineer">DevOps Engineer</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="defaultDod">Default Definition of Done Items</label>
+          <textarea id="defaultDod" rows="4" placeholder="- Unit tests written&#10;- Code reviewed&#10;- Documentation updated"></textarea>
+          <p class="hint">One item per line. These will be included in every ticket.</p>
+        </div>
+        <button type="button" id="saveSettingsBtn" class="btn btn-primary">Save Settings</button>
+      </section>
+
+      <section class="section">
+        <h3 class="section-title-plain">Data Management</h3>
+        <div class="data-actions">
+          <button type="button" id="exportDataBtn" class="btn btn-secondary">Export Data</button>
+          <button type="button" id="importDataBtn" class="btn btn-secondary">Import Data</button>
+          <input type="file" id="importFile" accept=".json" hidden>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
